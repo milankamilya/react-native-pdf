@@ -32,6 +32,7 @@ interface Props {
     enablePaging?: boolean,
     enableRTL?: boolean,
     enableAnnotationRendering?: boolean,
+    enableAnnotationInteraction?: boolean,
     fitPolicy?: number,
     trustAllCerts?: boolean,
     singlePage?: boolean,
@@ -45,7 +46,6 @@ interface Props {
 }
 
 declare class Pdf extends React.Component<Props, any> {
-    setPage: (pageNumber: number) => void;
 }
 
 export default Pdf;

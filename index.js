@@ -21,16 +21,7 @@ import {
 import { ProgressBar } from '@react-native-community/progress-bar-android'
 import { ProgressView } from '@react-native-community/progress-view'
 
-let RNFetchBlob = {
-    fs : {
-        dirs: {
-            CacheDir: ''
-        }
-    }
-};
-if (Platform.OS !== 'windows') {
-    RNFetchBlob = require('rn-fetch-blob');
-}
+import RNFetchBlob from 'rn-fetch-blob';
 
 const SHA1 = require('crypto-js/sha1');
 import PdfView from './PdfView';
@@ -60,6 +51,7 @@ export default class Pdf extends Component {
         activityIndicatorProps: PropTypes.any,
         enableAntialiasing: PropTypes.bool,
         enableAnnotationRendering: PropTypes.bool,
+        enableAnnotationInteraction: PropTypes.bool,
         enablePaging: PropTypes.bool,
         enableRTL: PropTypes.bool,
         fitPolicy: PropTypes.number,
@@ -93,6 +85,7 @@ export default class Pdf extends Component {
         page: 1,
         enableAntialiasing: true,
         enableAnnotationRendering: true,
+        enableAnnotationInteraction: true,
         enablePaging: false,
         enableRTL: false,
         activityIndicatorProps: {color: '#009900', progressTintColor: '#009900'},
@@ -175,10 +168,12 @@ export default class Pdf extends Component {
         const source = Image.resolveAssetSource(newSource) || {};
 
         let uri = source.uri || '';
+
         // first set to initial state
         if (this._mounted) {
             this.setState({isDownloaded: false, path: '', progress: 0});
         }
+
         const cacheFile = RNFetchBlob.fs.dirs.CacheDir + '/' + SHA1(uri) + '.pdf';
 
         if (source.cache) {
@@ -382,9 +377,9 @@ export default class Pdf extends Component {
             } else if (message[0] === 'error') {
                 this._onError(new Error(message[1]));
             } else if (message[0] === 'pageSingleTap') {
-                this.props.onPageSingleTap && this.props.onPageSingleTap(Number(message[1]), Number(message[2]), Number(message[3]));
+                this.props.onPageSingleTap && this.props.onPageSingleTap(message[1], message[2], message[3]);
             } else if (message[0] === 'scaleChanged') {
-                this.props.onScaleChanged && this.props.onScaleChanged(Number(message[1]));
+                this.props.onScaleChanged && this.props.onScaleChanged(message[1]);
             } else if (message[0] === 'linkPressed') {
                 this.props.onPressLink && this.props.onPressLink(message[1]);
             }
@@ -399,7 +394,7 @@ export default class Pdf extends Component {
     };
 
     render() {
-        if (Platform.OS === "android" || Platform.OS === "ios" || Platform.OS === "windows") {
+        if (Platform.OS === "android" || Platform.OS === "ios") {
                 return (
                     <View style={[this.props.style,{overflow: 'hidden'}]}>
                         {!this.state.isDownloaded?
@@ -422,7 +417,7 @@ export default class Pdf extends Component {
                                             {...this.props.activityIndicatorProps}
                                         />}
                             </View>):(
-                                Platform.OS === "android" || Platform.OS === "windows"?(
+                                Platform.OS === "android"?(
                                         <PdfCustom
                                             ref={component => (this._root = component)}
                                             {...this.props}
@@ -468,10 +463,6 @@ if (Platform.OS === "android") {
     })
 } else if (Platform.OS === "ios") {
     var PdfCustom = requireNativeComponent('RCTPdfView', Pdf, {
-        nativeOnly: {path: true, onChange: true},
-    })
-} else if (Platform.OS === "windows") {
-    var PdfCustom = requireNativeComponent('RCTPdf', Pdf, {
         nativeOnly: {path: true, onChange: true},
     })
 }

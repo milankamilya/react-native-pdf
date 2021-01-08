@@ -20,11 +20,10 @@
     "url": "https://github.com/wonday/react-native-pdf/issues"
   },
   "dependencies": {
-    "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react": "16.8.6",
+    "react-native": "0.60.4",
     "react-native-orientation-locker": "^1.1.6",
-    "react-native-pdf": "file:../",
-    "react-native-windows": "^0.63.11",
+    "react-native-pdf": "github:wonday/react-native-pdf#master",
     "rn-fetch-blob": "^0.10.16"
   },
   "devDependencies": {

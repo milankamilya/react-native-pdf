@@ -31,6 +31,7 @@ NS_CLASS_AVAILABLE_IOS(11_0) @interface RCTPdfView : UIView <UIGestureRecognizer
 @property(nonatomic) BOOL enablePaging;
 @property(nonatomic) BOOL enableRTL;
 @property(nonatomic) BOOL enableAnnotationRendering;
+@property(nonatomic) BOOL enableAnnotationInteraction;
 @property(nonatomic) int fitPolicy;
 @property(nonatomic) int spacing;
 @property(nonatomic, strong) NSString *password;

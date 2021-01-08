@@ -34,6 +34,7 @@ export type Props = {
   activityIndicator?: Node,
   activityIndicatorProps?: { [prop: string]: mixed },
   enableAnnotationRendering?: boolean,
+  enableAnnotationInteraction?: boolean,
   enableAntialiasing?: boolean,
   enablePaging?: boolean,
   enableRTL?: boolean,
@@ -41,7 +42,7 @@ export type Props = {
   horizontal?: boolean,
   maxScale?: number,
   minScale?: number,
-  singlePage?: boolean,
+  singlePage: boolean,
   onError?: (error: Error) => void,
   onLoadComplete?: (numberOfPages: number, path: string, size: { height: number, width: number }, tableContents: ?TableContent[]) => void,
   onLoadProgress?: (percent: number) => void,
@@ -58,6 +59,4 @@ export type Props = {
   testID?: string
 };
 
-declare export default class Pdf extends Component<Props> {
-  setPage: (pageNumber: number) => void;
-}
+declare export default class Pdf extends Component<Props> {}
