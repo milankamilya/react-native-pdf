@@ -69,6 +69,7 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
     private String password = "";
     private boolean enableAntialiasing = true;
     private boolean enableAnnotationRendering = true;
+    private boolean enableAnnotationInteraction = true;
 
     private boolean enablePaging = false;
     private boolean autoSpacing = false;
@@ -292,6 +293,10 @@ public class PdfView extends PDFView implements OnPageChangeListener,OnLoadCompl
 
     public void setEnableAnnotationRendering(boolean enableAnnotationRendering) {
         this.enableAnnotationRendering = enableAnnotationRendering;
+    }
+
+    public void setEnableAnnotationInteraction(boolean enableAnnotationInteraction) {
+        this.enableAnnotationInteraction = enableAnnotationInteraction;
     }
 
     public void setEnablePaging(boolean enablePaging) {
